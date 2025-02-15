@@ -29,7 +29,7 @@ def binary_search(length, cutting_point, cutting_num):
         
         cnt = calculate_cnt(cutting_point, mid)
         
-        if cnt > cutting_num:
+        if cnt >= cutting_num+1:
             answer = mid
             start = mid + 1
             
