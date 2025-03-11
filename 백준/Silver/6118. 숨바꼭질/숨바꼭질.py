@@ -1,39 +1,46 @@
-from collections import deque
+import sys
+input = sys.stdin.readline
+import heapq
+INF = int(1e9)
 
 n, m = map(int, input().split())
 
-arr = [list() for _ in range(n+1)]
-
+graph = [[] for _ in range(n+1)]
+distance = [INF for _ in range(n+1)]
+distance[0] = -INF
 for _ in range(m):
-    a, b = map(int, input().split())
-    arr[a].append(b)
-    arr[b].append(a)
-    
-    
+    n1, n2 = map(int, input().split())
+    graph[n1].append((1, n2))
+    graph[n2].append((1, n1))
+
 visited = [False for _ in range(n+1)]
 
-queue = deque([(1, 0)])
-
-maximum = 0
-barn_list = []
-
-while queue:
-    elt = queue.popleft()
+def dijkstra(start):
+    queue = []
+    heapq.heappush(queue, (0, start))
+    distance[start] = 0
     
-    num, dist = elt[0], elt[1]
-    if visited[num]:
-        continue
-    else:
-        visited[num] = True
-    
-    if dist == maximum:
-        barn_list.append(num)
-    elif dist > maximum:
-        barn_list = [num]
-        maximum = dist
-    
-    for barn in arr[num]:
-        queue.append((barn, dist+1))
+    while queue:
+        dist, now = heapq.heappop(queue)
+        
+        if dist > distance[now]:
+            continue
+        
+        for additional_cost, dest in graph[now]:
+            cost = dist + additional_cost
+            if cost < distance[dest]:
+                distance[dest] = cost
+                heapq.heappush(queue, (cost, dest))
 
-barn_list.sort()
-print(barn_list[0], maximum, len(barn_list))
+dijkstra(1)
+
+target_num = 0
+maximum = max(distance)
+cnt = 0
+for i in range(1, n+1):
+    if distance[i] == maximum:
+        cnt += 1
+        if not target_num:
+            target_num = i
+            
+print(target_num, maximum, cnt)
