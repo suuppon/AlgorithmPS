@@ -5,19 +5,20 @@ INF = int(1e9)
 
 n, m = map(int, input().split())
 
-graph = [[] for _ in range(n+1)]
+# graph의 의미 : a에서 b로 가려면 cost만큼 든다 -> (cost, b) is in graph[a]
+graph = [list() for _ in range(n+1)]
+
 distance = [INF for _ in range(n+1)]
-distance[0] = -INF
+
 for _ in range(m):
-    n1, n2 = map(int, input().split())
-    graph[n1].append((1, n2))
-    graph[n2].append((1, n1))
-
-visited = [False for _ in range(n+1)]
-
+    a, b, c = map(int, input().split())
+    graph[a].append((c, b))
+    graph[b].append((c, a))
+    
 def dijkstra(start):
-    queue = []
-    heapq.heappush(queue, (0, start))
+    queue = list()
+    queue.append((0, start))
+    heapq.heapify(queue)
     distance[start] = 0
     
     while queue:
@@ -34,13 +35,4 @@ def dijkstra(start):
 
 dijkstra(1)
 
-target_num = 0
-maximum = max(distance)
-cnt = 0
-for i in range(1, n+1):
-    if distance[i] == maximum:
-        cnt += 1
-        if not target_num:
-            target_num = i
-            
-print(target_num, maximum, cnt)
+print(distance[n])
