@@ -1,11 +1,29 @@
-import sys
-input = sys.stdin.readline
+n = int(input())
+A = list(map(int, input().split()))
+m = int(input())
+arr = list(map(int, input().split()))
 
-class Node:
+A.sort()
+
+def binary_search(arr, x):
+    start = 0
+    end = n-1
+    answer = 0
     
-    def __init__(self, value):
-        self.value = value
-        self.next = None
+    while start <= end:
+        mid = (start + end) // 2
         
-Hashtable = [None * 10]
-
+        if x > arr[mid]:
+            start = mid + 1
+        elif x < arr[mid]:
+            end = mid - 1
+        else:
+            answer = 1
+            break
+    
+    return answer
+    
+for item in arr:
+    print(binary_search(A, item))
+    
+    
