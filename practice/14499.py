@@ -4,6 +4,10 @@ input = sys.stdin.readline
 class Dice:
     def __init__(self):
         self.top, self.bottom, self.north, self.south, self.east, self.west = 0, 0, 0, 0, 0, 0
+    
+    def roll(self, cmd):
+        cmd_dict = {1: self.turn_east, 2:self.turn_west, 3:self.turn_north, 4:self.turn_south}
+        cmd_dict[cmd]()
         
     def turn_north(self):
         self.top, self.north, self.bottom, self.south = self.south, self.top, self.north, self.bottom
@@ -42,15 +46,8 @@ for cmd in command_list:
     
     r, c = nr, nc
     
-    if cmd == 1:
-        dice.turn_east()
-    elif cmd == 2:
-        dice.turn_west()
-    elif cmd == 3:
-        dice.turn_north()
-    elif cmd == 4:
-        dice.turn_south()
-        
+    dice.roll(cmd=cmd)
+
     if Map[r][c] == 0:
         Map[r][c] = dice.bottom
     else:
