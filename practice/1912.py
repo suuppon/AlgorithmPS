@@ -1,15 +1,13 @@
 import sys
 input = sys.stdin.readline
 
-def max_continuous_sum(sequence):
-    sum1 = sequence[0]
-    sum2 = sequence[1]
-    
-    for i in range(1, len(sequence)):
-        if sum1 > 
+n = int(input())
+sequence = list(map(int, input().split()))
 
-def main():
-    n = int(input())
-    
-    sequence = list(map(int, input().split()))
-    print(max_continuous_sum(sequence))
+dp_table = [0 for _ in range(n+1)]
+dp_table[0] = -1001
+
+for i in range(1, n+1):
+    dp_table[i] = max(dp_table[i-1] + sequence[i-1], sequence[i-1])
+
+print(max(dp_table))

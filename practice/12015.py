@@ -1,3 +1,6 @@
+import sys
+input = sys.stdin.readline
+
 n = int(input())
 seq = list(map(int, input().split()))
 
@@ -6,5 +9,4 @@ end = n
 
 while start <= end:
     mid = (start + end) // 2
-    
     
