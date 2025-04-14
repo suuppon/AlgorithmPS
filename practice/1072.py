@@ -1,29 +1,19 @@
-def Compute_i(X,Y,Z):
-    if Z >= 99:
-        return -1
-    else:
-        i = (X*Z+X-100*Y)//(99-Z)
-        if i == int(i):
-            return int(i)
-        else:
-            return int(i+1)
+x, y = map(int, input().split())
 
+z = (y * 100) // x
 
-def Compute_index(X,Y,Z):
-    i = Compute_i(X,Y,Z)
-    if i == -1:
-        return -1
+start = 0
+end = 10**13
+
+answer = -1
+while start <= end:
+    mid = (start + end) // 2
     
-    while True:
-        if Z < int(((Y+i)/(X+i)*100)):
-            break
-        else:
-            i += 1
-    return i
-
-X, Y = map(int, input().split())
-Z = int(Y/X * 100)
-
-i = Compute_index(X,Y,Z)
-
-print(i)
+    if z < ((y + mid) * 100) // (x + mid):
+        answer = mid
+        end = mid - 1
+        
+    else:
+        start = mid + 1
+        
+print(answer)
